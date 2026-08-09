@@ -8,15 +8,7 @@ Read-only connectors, SDK/API, privacy, analytics, scheduled profiles, browser e
 
 | Repository | Class | Readiness | Primary dependency path |
 |---|---|---|---|
-| `clients-consumer-matrix` | SDK consumer | `ready` | `matrix` |
-| `whatsapp-web-connector` | provider adapter | `ready` | `matrix` |
-| `instagram-messenger-connectors` | provider adapter | `ready` | `matrix` |
-| `tinder-badoo-connectors` | provider adapter | `ready` | `matrix` |
-| `cupid-sites-connectors` | provider adapter | `ready` | `matrix` |
-| `scheduled-profile-rotation` | scheduler/failover | `ready` | `matrix` |
-| `privacy-redaction` | security | `ready` | `matrix` |
-| `analytics-pipeline` | performance/scale | `ready` | `matrix` |
-| `browser-extension-flutter-e2e` | UI/accessibility | `ready` | `matrix` |
+Private repository details are intentionally withheld from this public document.
 
 Pull requests run deterministic harness checks. Emulators, desktop matrices, live APIs/providers, databases, chaos, scale, and soaks are scheduled/manual. Missing upstreams or credentials are blocked readiness—not false passes or product regressions.
 
@@ -41,3 +33,15 @@ GitHub owns code and delivery evidence; Linear owns planning and dependencies. T
 
 Repositories in this organization use semantic conflict resolution with 3–10 relevant prior commits when useful, full cross-repository context, pull-request delivery, and a hard automated-agent denylist for destructive or history-rewriting operations.
 <!-- ore-org-baseline:end -->
+
+<!-- BEGIN MANAGED REPOSITORY RELATIONSHIPS v1 -->
+## Repository relationship registry
+
+`messaging-intel-test` declares repository roles, dependency edges, cross-organization capabilities, deployment ownership, and the git-submodule/Zed-package contract:
+
+- [Human-readable map](architecture/REPOSITORY_RELATIONSHIPS.md)
+- [Machine-readable manifest](architecture/repository-relationships.json)
+- [JSON Schema](architecture/repository-relationships.schema.json)
+
+The public registry withholds private repository names and edges.
+<!-- END MANAGED REPOSITORY RELATIONSHIPS v1 -->
