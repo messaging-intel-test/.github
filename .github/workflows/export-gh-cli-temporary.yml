@@ -1,0 +1,53 @@
+name: Temporary GitHub CLI binary export
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: temporary-gh-cli-export-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Download and verify immutable GitHub CLI release
+        env:
+          GH_VERSION: "2.97.0"
+          GH_ARCHIVE_SHA256: "a2c9b8497e1f85b1ad0dfcb78b5a622e098801b8e461e459e88e1ee12f018112"
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/gh_${GH_VERSION}_linux_amd64.tar.gz"
+          export_dir="$RUNNER_TEMP/gh-export"
+          mkdir -p "$export_dir"
+
+          curl \
+            --proto '=https' \
+            --tlsv1.2 \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" \
+            --output "$archive"
+
+          printf '%s  %s\n' "$GH_ARCHIVE_SHA256" "$archive" | sha256sum --check --strict
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          install -m 0755 "$RUNNER_TEMP/gh_${GH_VERSION}_linux_amd64/bin/gh" "$export_dir/gh"
+          "$export_dir/gh" --version | tee "$export_dir/version.txt"
+          sha256sum "$export_dir/gh" | tee "$export_dir/gh.sha256"
+          printf '%s\n' "$GH_ARCHIVE_SHA256" > "$export_dir/archive.sha256"
+
+      - name: Upload verified binary
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gh-linux-amd64-2.97.0
+          path: ${{ runner.temp }}/gh-export
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 9
