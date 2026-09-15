@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "testOwner": {"login": "messaging-intel-test", "id": 313178908, "type": "Organization"},
+  "productionOwner": {"login": "messaging-intel", "id": 308168184, "type": "Organization"},
+  "discoveryScope": {"kind": "organization-current-tips"},
+  "relationshipRegistry": "architecture/repository-relationships.json",
+  "evidenceAnchors": ["messaging-intel-test/contract-conformance-tests:vector-source-pin.json"],
+  "policy": {"suffixInferenceAuthoritative": false, "bindExactDefaultBranchSha": true, "failClosedOnInvisiblePrivateSources": true, "silentPublicFallbackAllowed": false}
+}
